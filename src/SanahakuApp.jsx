@@ -8,7 +8,7 @@ export default function SanahakuApp() {
   const [sana, setSana] = useState("");
   const [tulos, setTulos] = useState(null);
   const [synonyymit, setSynonyymit] = useState(null);
-  const [tila, setTila] = useState("idle"); // idle | loading | valmis | virhe
+  const [tila, setTila] = useState("idle");
   const inputRef = useRef(null);
 
   const haeMerkitys = async () => {
@@ -23,7 +23,6 @@ export default function SanahakuApp() {
 
     setTila("loading");
     try {
-      // 1. Yritetään Wikipediaa
       const response = await fetch(
         `https://fi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(sanaTrim)}`
       );
@@ -33,7 +32,6 @@ export default function SanahakuApp() {
         if (data.extract) {
           const firstWord = data.extract.trim().split(" ")[0];
           if (firstWord[0] === firstWord[0].toUpperCase()) {
-            // Erisnimi → jatketaan Wikisanakirjaan
           } else {
             setTulos(`${data.extract} (Lähde: Wikipedia)`);
             setTila("valmis");
@@ -42,7 +40,6 @@ export default function SanahakuApp() {
         }
       }
 
-      // 2. Jos Wikipedia ei toiminut tai oli erisnimi, yritetään Wikisanakirjaa
       const wikiSanakirjaResponse = await fetch(
         `https://fi.wiktionary.org/w/api.php?action=parse&page=${encodeURIComponent(sanaTrim)}&prop=text&formatversion=2&format=json&origin=*`
       );
@@ -58,7 +55,6 @@ export default function SanahakuApp() {
           setTulos(`Sanaa '${sanaTrim}' ei löytynyt Wikipediasta tai Wikisanakirjasta.`);
         }
 
-        // Yritetään poimia synonyymit
         const synonyymiOtsikko = htmlText.indexOf("<h3>Synonyymit</h3>");
         if (synonyymiOtsikko !== -1) {
           const synonyymiOsio = htmlText.substring(synonyymiOtsikko);
@@ -93,6 +89,8 @@ export default function SanahakuApp() {
     }
   };
 
+  const suomisanakirjaURL = `https://www.suomisanakirja.fi/${encodeURIComponent(sana)}`;
+
   return (
     <div className="container">
       <div className="logo-wrapper">
@@ -124,6 +122,9 @@ export default function SanahakuApp() {
                 </ul>
               </div>
             )}
+            <a href={suomisanakirjaURL} target="_blank" rel="noopener noreferrer">
+              Katso Suomisanakirjasta
+            </a>
             <button onClick={nollaa}>OK</button>
           </div>
         </div>
