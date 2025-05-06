@@ -80,7 +80,8 @@ export default function SanahakuApp() {
   return (
     <div className="container">
       <div className="logo-wrapper">
-        <img src="/logo.png" alt="Tavukolmio Logo" className="logo" />
+  <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Tavukolmio Logo" className="logo" />
+
       </div>
       <h1 className="title">Sanahaku</h1>
       <div className="input-wrapper">
