@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sanalistan muokkaus</title>
+</head>
+<body>
+  <h2>Sanalistan muokkaus</h2>
+
+  <input type="file" id="fileInput" accept=".js"><br><br>
+
+  <textarea id="newWords" rows="4" cols="50" placeholder="Syötä uusia sanoja pilkulla tai rivinvaihdolla eroteltuna"></textarea><br><br>
+
+  <button onclick="updateWordList()">Lisää sanat ja lataa uusi tiedosto</button>
+
+  <pre id="status" style="background:#f0f0f0; padding:10px; border:1px solid #ccc; width:80%;"></pre>
+
+  <script>
+    let originalWords = [];
+
+    document.getElementById('fileInput').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const text = e.target.result;
+
+        // Hae sanat listasta: ['sana1', 'sana2', ...]
+        const match = text.match(/\[\s*(['"].+?['"](,\s*['"].+?['"])*)\s*\]/);
+        if (!match) {
+          document.getElementById('status').textContent = 'Virhe: sanojen listaa ei löytynyt tiedostosta.';
+          return;
+        }
+
+        const rawList = match[1];
+        originalWords = rawList
+          .split(/['"]\s*,\s*['"]/)
+          .map(w => w.replace(/^['"]|['"]$/g, '').toLowerCase())
+          .filter(Boolean);
+
+        document.getElementById('status').textContent = 'Tiedosto ladattu. Sanoja: ' + originalWords.length;
+      };
+      reader.readAsText(file);
+    });
+
+    function updateWordList() {
+      const input = document.getElementById('newWords').value;
+      const newWords = input
+        .split(/[\s,]+/)
+        .map(w => w.trim().toLowerCase())
+        .filter(w => w.length > 0);
+
+      const wordSet = new Set(originalWords);
+      const addedWords = [];
+      const skippedWords = [];
+
+      for (const word of newWords) {
+        if (wordSet.has(word)) {
+          skippedWords.push(word);
+        } else {
+          wordSet.add(word);
+          addedWords.push(word);
+        }
+      }
+
+      const sortedWords = Array.from(wordSet).sort((a, b) => a.localeCompare(b));
+      const rows = [];
+      for (let i = 0; i < sortedWords.length; i += 50) {
+        rows.push(sortedWords.slice(i, i + 50).map(w => `'${w}'`).join(', '));
+      }
+
+      const finalOutput = `export const wordList = new Set([\n${rows.join(',\n')}\n]);\n`;
+
+      let msg = `Lisätty ${addedWords.length} sanaa.\n`;
+      if (addedWords.length > 0) msg += `Uudet sanat: ${addedWords.join(', ')}\n`;
+      if (skippedWords.length > 0) msg += `Ohitettiin (jo listalla): ${skippedWords.join(', ')}\n`;
+      document.getElementById('status').textContent = msg;
+
+      const blob = new Blob([finalOutput], { type: 'text/javascript' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'wordList.js';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
