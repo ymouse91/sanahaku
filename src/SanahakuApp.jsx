@@ -13,6 +13,12 @@ export default function SanahakuApp() {
 
   const haeMerkitys = async () => {
     const sanaTrim = sana.trim().toLowerCase();
+	if (!sanaTrim) {
+  setTulos("Anna sana ennen hakua.");
+  setTila("valmis");
+  return;
+}
+
     setSynonyymit(null);
 
     if (!sanaSet.has(sanaTrim)) {
@@ -24,8 +30,9 @@ export default function SanahakuApp() {
     setTila("loading");
     try {
       const response = await fetch(
-        `https://fi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(sanaTrim)}`
+        `https://fi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(sanaTrim.toLowerCase())}`
       );
+
 
       if (response.ok) {
         const data = await response.json();
