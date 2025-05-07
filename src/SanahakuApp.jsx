@@ -89,8 +89,8 @@ export default function SanahakuApp() {
     }
   };
 
-  const suomisanakirjaURL = `https://www.suomisanakirja.fi/${encodeURIComponent(sana)}`;
-
+ 
+  const suomisanakirjaURL = `https://www.suomisanakirja.fi/${encodeURIComponent(sana.trim().toLowerCase())}`;
   return (
     <div className="container">
       <div className="logo-wrapper">
