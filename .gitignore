@@ -1,0 +1,8 @@
+# Vältettävät kansiot ja tiedostot
+node_modules/
+dist/
+*.log
+*.lock
+.vscode/
+.DS_Store
+.env
