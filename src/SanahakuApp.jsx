@@ -128,7 +128,9 @@ export default function SanahakuApp() {
       </a>
     )}
 	 <br />
-    <button onClick={nollaa} style={{ marginTop: 10 }}>OK</button>
+    <div style={{ marginTop: 10, display: "flex", justifyContent: "center" }}>
+  <button onClick={nollaa}>OK</button>
+</div>
   </div>
 )}
 
