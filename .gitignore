@@ -1,8 +1,17 @@
-# Vältettävät kansiot ja tiedostot
+# Kehitysympäristön kansiot
 node_modules/
 dist/
+build/
+.vite/
+.vscode/
+
+# Lukitustiedostot ja logit
 *.log
 *.lock
-.vscode/
+
+# Käyttöjärjestelmäkohtaiset tiedostot
 .DS_Store
+Thumbs.db
+
+# Ympäristömuuttujat (jos käytössä)
 .env
