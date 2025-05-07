@@ -108,27 +108,30 @@ export default function SanahakuApp() {
         <button onClick={haeMerkitys}>Hae merkitys</button>
       </div>
       {tila === "loading" && <p>Haetaan tietoa...</p>}
-      {tulos && (
-        <div className="card">
-          <div className="card-content">
-            <p className="result-text">{tulos}</p>
-            {synonyymit && (
-              <div>
-                <strong>Synonyymit:</strong>
-                <ul>
-                  {synonyymit.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <a href={suomisanakirjaURL} target="_blank" rel="noopener noreferrer">
-              Katso Suomisanakirjasta
-            </a>
-            <button onClick={nollaa}>OK</button>
-          </div>
-        </div>
-      )}
+     {tulos && (
+  <div style={{ marginTop: 20, background: "#eee", padding: 20, borderRadius: 8 }}>
+    <p>{tulos}</p>
+    {synonyymit && (
+      <div>
+        <strong>Synonyymit:</strong>
+        <ul>
+          {synonyymit.map((s, i) => (
+            <li key={i}>{s}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {/* Linkki näytetään vain jos tulos ei sisällä 'ei löytynyt' */}
+    {!tulos.includes("ei löytynyt") && (
+      <a href={suomisanakirjaURL} target="_blank" rel="noopener noreferrer">
+        Katso Suomisanakirjasta
+      </a>
+    )}
+	 <br />
+    <button onClick={nollaa} style={{ marginTop: 10 }}>OK</button>
+  </div>
+)}
+
     </div>
   );
 }
