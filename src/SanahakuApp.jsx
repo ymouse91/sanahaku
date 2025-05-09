@@ -131,7 +131,7 @@ export default function SanahakuApp() {
     {/* Linkki näytetään vain jos tulos ei sisällä 'ei löytynyt' */}
     {!tulos.includes("ei löytynyt") && (
       <a href={suomisanakirjaURL} target="_blank" rel="noopener noreferrer">
-        Katso Suomisanakirjasta
+        &gt;&gt; Katso Suomisanakirjasta
       </a>
     )}
 	 <br />

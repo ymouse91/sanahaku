@@ -72,3 +72,8 @@ button:hover {
 .result-text {
   margin-bottom: 1rem;
 }
+
+a {
+  color: #0066cc;
+  text-decoration: underline; /* esim. ilman alleviivausta */
+}
