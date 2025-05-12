@@ -98,15 +98,7 @@ export default function SanahakuApp() {
     }
   };
 
-  
-  const avaaKotusHaku = () => {
-    const sanaTrim = sana.trim().toLowerCase();
-    if (!sanaTrim) return;
-    const kotusURL = `https://www.kielitoimistonsanakirja.fi/#/${encodeURIComponent(sanaTrim)}`;
-    window.open(kotusURL, "_blank");
-  };
-
-  const kotusURL = `https://www.kielitoimistonsanakirja.fi/#/Koti?searchMode=all&searchWord=${encodeURIComponent(sana.trim().toLowerCase())}&_=${Date.now()}`;
+  const suomisanakirjaURL = `https://www.suomisanakirja.fi/${encodeURIComponent(sana.trim().toLowerCase())}`;
 
   return (
     <div className="container">
@@ -139,12 +131,12 @@ export default function SanahakuApp() {
                 </ul>
               </div>
             )}
+            {!tulos.includes("ei löytynyt") && (
+              <a href={suomisanakirjaURL} target="_blank" rel="noopener noreferrer">
+                &gt;&gt; Katso Suomisanakirjasta
+              </a>
+            )}
             <div style={{ marginTop: 10, display: "flex", justifyContent: "center" }}>
-             <button className="link-button" onClick={avaaKotusHaku}>
-               &gt;&gt; Katso Kielitoimiston sanakirjasta
-            </button>
-            </div>
-			            <div style={{ marginTop: 10, display: "flex", justifyContent: "center" }}>
               <button onClick={nollaa}>OK</button>
             </div>
           </div>

@@ -62,6 +62,20 @@ button:hover {
   background-color: #004e99;
 }
 
+.link-button {
+  background: none;
+  color: #0645AD; /* sininen linkkiväri */
+  padding: 0.1 rem;
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.link-button:hover {
+  background-color: #eee;
+}
+
+
 .card {
   background: white;
   border: 1px solid #ccc;
