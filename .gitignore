@@ -1,17 +1,14 @@
-# Kehitysympäristön kansiot
+# node ja build kansiot
 node_modules/
 dist/
-build/
 .vite/
-.vscode/
-
-# Lukitustiedostot ja logit
+.cache/
 *.log
-*.lock
 
-# Käyttöjärjestelmäkohtaiset tiedostot
+# editorin/metatiedot
+.vscode/
 .DS_Store
 Thumbs.db
 
-# Ympäristömuuttujat (jos käytössä)
+# ympäristömuuttujat (jos olisi)
 .env
