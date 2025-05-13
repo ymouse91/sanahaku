@@ -1,8 +1,4 @@
 const wordList = new Set([
-  'AVI',
-  'Ahti',
-  'ELY',
-  'Emu',
   'aalto',
   'aamen',
   'aamu',
